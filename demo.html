@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Dialog弹框Demo</title>
+	<script type="text/javascript" src="js/dialoger.js"></script>
+</head>
+<body>
+	<h1>Loading</h1>
+	<button type="button" id="loading">loading 3秒后消失</button><br>
+
+	<h1>alert</h1>
+	<button type="button" id="alert">alert 普通</button><br>
+	<button type="button" id="alert2">alert 带标题</button><br>
+
+	<h1>comfirm</h1>
+	<button type="button" id="confirm">comfirm</button><br>
+	<button type="button" id="confirm2">comfirm 带标题 自定义按钮</button><br>
+
+	<h1>toast</h1>
+	<button type="button" id="toast">toast</button><br>
+	<button type="button" id="toast1">toast-success</button><br>
+	<button type="button" id="toast2">toast-error</button><br>
+
+	<h1>notify</h1>
+	<button type="button" id="notify">notify</button><br>
+
+	<h1>modal</h1>
+	<button type="button" id="modal">modal-传入字符串</button><br>
+	<button type="button" id="modal2">modal-传入DOM对象</button><br>
+	
+	<div id="modalBody">
+		这是要显示在Modal里的内容
+		<p>1111111</p>
+		<p>222222222</p>
+	</div>
+
+	<script type="text/javascript">
+
+		// loading
+		document.querySelector('#loading').onclick = function() {
+			dialoger.$loading.open({mes: '请稍后'});
+			setTimeout(function() {
+				dialoger.$loading.close();
+			},3000)
+		}
+
+		//confirm
+		document.querySelector('#confirm').onclick = function() {
+			dialoger.$confirm({
+				mes: '点击确定按钮试下?', 
+				callback: function() {
+					dialoger.$toast({mes: '你点击了OK'})
+				}
+			});
+		}
+		document.querySelector('#confirm2').onclick = function() {
+			dialoger.$confirm({
+				title: '确认提示',
+				mes: '确定要删除吗?', 
+				btns: [
+					{txt: '不删除', stylename: 'default-btn', callback: function(){
+						dialoger.$toast({mes: '不删除'})
+					}},
+					{txt: '考虑一下', callback: function(){
+						dialoger.$toast({mes: '很谨慎'})
+					}},
+					{txt: '删除吧', callback: function() {
+						dialoger.$toast({mes: '已经删除'})
+					}}
+				]
+			});
+		}
+
+		//alert
+		document.querySelector('#alert').onclick = function() {
+			dialoger.$alert({mes: '这是提示的信息'});
+		}
+		document.querySelector('#alert2').onclick = function() {
+			dialoger.$alert({mes: '这是提示的信息', title: '标题'});
+		}
+
+
+		//toast
+		document.querySelector('#toast').onclick = function() {
+			dialoger.$toast({mes: '这是提示的信息'});
+		}
+		document.querySelector('#toast1').onclick = function() {
+			dialoger.$toast({mes: '成功', type: 'success'});
+		}
+		document.querySelector('#toast2').onclick = function() {
+			dialoger.$toast({mes: '失败', type: 'error'});
+		}
+
+		//notify
+		document.querySelector('#notify').onclick = function() {
+			dialoger.$notify({mes: '这是提示的信息'});
+		}
+
+		//modal
+		document.querySelector('#modal').onclick = function() {
+			dialoger.$modal.open({
+				id: 'jisdfj',
+				body: '<h3>这是提示的信息</h3>'
+			});
+		}
+		document.querySelector('#modal2').onclick = function() {
+			dialoger.$modal.open({
+				id: 'dss',
+				title: '来自于ModalBody里的内容',
+				body: document.querySelector('#modalBody')
+			});
+		}
+		
+		
+
+	</script>
+
+</body>
+</html>
